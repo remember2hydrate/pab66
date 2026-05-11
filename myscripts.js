@@ -387,7 +387,7 @@ function hideShimmer(id) { document.getElementById(id).classList.add('done');   
 // ── Slot loader ──────────────────────────────────────────────
 //  Skips the reload if the iframe already shows the target src.
 //  Pass src=null to leave the panel in its placeholder state.
-function loadSlot(frameEl, shimmerId, src) {
+function loadSlot(frameEl, shimmerId, src, onLoaded) {
   if (!src || !frameEl) {
     // No file configured for this slot — leave the broken-file placeholder hidden
     if (shimmerId) hideShimmer(shimmerId);
@@ -397,7 +397,11 @@ function loadSlot(frameEl, shimmerId, src) {
   // normalise: strip protocol+host so we compare just the path
   const current = frameEl.src.replace(location.origin, '');
   const target  = src.startsWith('/') ? src : '/' + src;
-  if (current === target) return;
+  if (current === target) {
+    // Already showing the right src — still run the callback (e.g. on first init)
+    if (onLoaded) onLoaded(frameEl);
+    return;
+  }
 
   showShimmer(shimmerId);
   frameEl.classList.add('loading');
@@ -405,6 +409,7 @@ function loadSlot(frameEl, shimmerId, src) {
   frameEl.onload = () => {
     frameEl.classList.remove('loading');
     hideShimmer(shimmerId);
+    if (onLoaded) onLoaded(frameEl);
   };
   frameEl.onerror = () => {
     frameEl.classList.remove('loading');
@@ -424,11 +429,24 @@ function updateMap() {
   loadSlot(frameMap, 'shimmer-map', PLOTS.map(currentMetric, currentYear));
 }
 
+function scrollHappinessToTopRight(frame) {
+  // Give the inner document a moment to finish rendering before scrolling
+  setTimeout(() => {
+    try {
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      const win = frame.contentWindow;
+      win.scrollTo(doc.body.scrollWidth, 0);
+    } catch (e) {
+      // Cross-origin guard — silently ignore
+    }
+  }, 120);
+}
+
 function updateYear() {
   updateSliderFill(currentYear);
   updateTicks(currentYear);
   yearDisplay.textContent = currentYear;
-  loadSlot(frameHappiness, 'shimmer-happiness', PLOTS.happiness(currentYear));
+  loadSlot(frameHappiness, 'shimmer-happiness', PLOTS.happiness(currentYear), scrollHappinessToTopRight);
 }
 
 function update() {
@@ -509,17 +527,5 @@ updateCor();
 
 
 
-const iframe = document.getElementById('frame-happiness');
-
-iframe.onload = () => {
-    const innerWindow = iframe.contentWindow;
-    const innerDoc = iframe.contentDocument;
-
-    // Wait a bit in case content renders dynamically
-    setTimeout(() => {
-        innerWindow.scrollTo(
-            innerDoc.body.scrollWidth,
-            0
-        );
-    }, 100);
-};
+// Scroll-to-top-right on happiness frame is now handled via
+// scrollHappinessToTopRight() passed as a callback into loadSlot().
