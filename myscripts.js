@@ -1,4 +1,4 @@
-    const trendsSection = document.getElementById('district-trends');
+const trendsSection = document.getElementById('district-trends');
     const singleFigureShell = document.getElementById('singleFigureShell');
     const singleFigureShell2 = document.getElementById('singleFigureShell2');
     const singleFigureImage = document.getElementById('singleFigureImage');
@@ -127,41 +127,41 @@
       }, CLOSING_STAGE_TRANSITION_MS);
     }
 
-    function updateClosingScene() {
-      const sectionRect = closingScrollSection.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-      const scrollable = closingScrollSection.offsetHeight - viewportH;
+    // function updateClosingScene() {
+    //   const sectionRect = closingScrollSection.getBoundingClientRect();
+    //   const viewportH = window.innerHeight;
+    //   const scrollable = closingScrollSection.offsetHeight - viewportH;
 
-      let progress = 0;
-      if (scrollable > 0) {
-        progress = Math.min(Math.max(-sectionRect.top / scrollable, 0), 1);
-      }
+    //   let progress = 0;
+    //   if (scrollable > 0) {
+    //     progress = Math.min(Math.max(-sectionRect.top / scrollable, 0), 1);
+    //   }
 
-      let desiredStage = -1;
+    //   let desiredStage = -1;
 
-      if (progress >= 0.04 && progress < 0.34) {
-        desiredStage = 0;
-      } else if (progress >= 0.34) {
-        desiredStage = 1;
-      }
+    //   if (progress >= 0.04 && progress < 0.34) {
+    //     desiredStage = 0;
+    //   } else if (progress >= 0.34) {
+    //     desiredStage = 1;
+    //   }
 
-      goToClosingStage(desiredStage);
-    }
+    //   goToClosingStage(desiredStage);
+    // }
 
-    function requestTick() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          updateScrollScene();
-          updateClosingScene();
-          ticking = false;
-        });
-      }
-    }
+    // function requestTick() {
+    //   if (!ticking) {
+    //     ticking = true;
+    //     requestAnimationFrame(() => {
+    //       updateScrollScene();
+    //       updateClosingScene();
+    //       ticking = false;
+    //     });
+    //   }
+    // }
 
-    window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', requestTick);
-    window.addEventListener('load', requestTick);
+    // window.addEventListener('scroll', requestTick, { passive: true });
+    // window.addEventListener('resize', requestTick);
+    // window.addEventListener('load', requestTick);
 
     const trendsEntranceObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -274,16 +274,7 @@ const PLOTS = {
   life:   null,
   trust:  null,
   mental: null,
-  happiness: year => {
-    // Pick the pre-rendered static variant that best matches the current viewport.
-    // Breakpoints mirror the three sets of files produced offline:
-    //   wide   → curved / ultrawide monitors  (≥ 1400 px)  → 1400 × 820
-    //   laptop → standard laptop / desktop    (768–1399 px) →  900 × 600
-    //   mobile → phone / small tablet         (<  768 px)   →  480 × 680
-    const w = window.innerWidth;
-    const variant = w >= 1400 ? 'wide' : w >= 768 ? 'laptop' : 'mobile';
-    return `visualizations/Mental_health_${year}_${variant}.html`;
-  },
+  happiness: year => `visualizations/Mental_health_${year}.html`,
 };
 
 // DOM refs
@@ -362,20 +353,16 @@ function preloadAll() {
     });
   });
 
-  // Happiness panel: preload all 3 responsive variants for every year
-  // so switching breakpoints (e.g. resizing) is instant from cache.
-  const HAPPINESS_VARIANTS = ['wide', 'laptop', 'mobile'];
+  // Happiness panel: preload one file per year
   YEARS.forEach(year => {
-    HAPPINESS_VARIANTS.forEach(variant => {
-      const src = `visualizations/Mental_health_${year}_${variant}.html`;
-      if (preloadCache.has(src)) return;
-      preloadCache.add(src);
-      const f = document.createElement('iframe');
-      f.src = src;
-      f.setAttribute('loading', 'lazy');
-      f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-      preloadPool.appendChild(f);
-    });
+    const src = `visualizations/Mental_health_${year}.html`;
+    if (preloadCache.has(src)) return;
+    preloadCache.add(src);
+    const f = document.createElement('iframe');
+    f.src = src;
+    f.setAttribute('loading', 'lazy');
+    f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+    preloadPool.appendChild(f);
   });
 }
 
@@ -480,30 +467,7 @@ update();
 requestAnimationFrame(() => setTimeout(preloadAll, 400));
 
 // ── Responsive happiness reload on window resize ─────────────
-// When the user resizes across a breakpoint boundary, swap in the
-// correctly-sized static variant so the chart is never clipped.
-(function watchBreakpoint() {
-  function getVariant() {
-    const w = window.innerWidth;
-    return w >= 1400 ? 'wide' : w >= 768 ? 'laptop' : 'mobile';
-  }
-  let lastVariant = getVariant();
-
-  // Debounce — only act 200 ms after resize stops
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      const v = getVariant();
-      if (v !== lastVariant) {
-        lastVariant = v;
-        // Force-clear current src so loadSlot doesn't skip the reload
-        frameHappiness.src = '';
-        updateYear();
-      }
-    }, 200);
-  });
-})();
+// Single file per year — no breakpoint variants, nothing to do.
 
 
 // ─────────────────────────────────────────────────────────────
