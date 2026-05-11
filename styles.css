@@ -994,27 +994,29 @@ sup a:hover {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(200,180,210,0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Navbar scroll reveal */
+/* Navbar always visible — scroll reveal disabled */
 .site-navbar {
-opacity: 0;
-pointer-events: none;
-transition: opacity 0.6s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+  opacity: 1;
+  pointer-events: all;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
+/* .nav-visible kept for compatibility but no longer needed */
 .site-navbar.nav-visible {
-opacity: 1;
-pointer-events: all;
+  opacity: 1;
+  pointer-events: all;
 }
 
 .nav-item {
-opacity: 0;
-transform: translateY(-6px);
-transition: opacity 0.4s ease, transform 0.4s ease;
-pointer-events: none;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
+/* .link-visible kept for compatibility but no longer needed */
 .nav-item.link-visible {
-opacity: 1;
-transform: translateY(0);
-pointer-events: all;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
 }
 
 .site-navbar .nav-link.active::after {
@@ -1171,9 +1173,9 @@ position: absolute;
 inset: 0;
 background: linear-gradient(
 90deg,
-rgba(44,23,51,0.6) 25%,
-rgba(197,154,174,0.12) 50%,
-rgba(44,23,51,0.6) 75%
+rgba(25, 40, 18, 0.8) 25%,
+rgba(20, 30, 18, 0.8) 50%,
+rgba(15, 30, 18, 0.8) 75%
 );
 background-size: 200% 100%;
 animation: euShimmer 1.3s infinite;
@@ -1293,15 +1295,17 @@ font-weight: 700;
     gap: 0;
   }
   
-  /* Tab bar spans full width of the section */
-  .eu-cor-tab-bar {
-    border-radius: 8px 8px 0 0;
-  }
-  
-  /* Full-width panel */
+  /* Tab bar and panels share a max-width and are centered within the section */
+  .eu-cor-tab-bar,
   .eu-cor-panel {
-    width: 100%;
-    height: 420px;          /* match map panel height; adjust if plot is taller */
+    width: min(1220px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .eu-cor-panel {
+    aspect-ratio: 1200 / 810;
+    height: auto;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     position: relative;
@@ -1314,27 +1318,31 @@ font-weight: 700;
     border: none;
     display: block;
   }
-/* ── Correlation insight text ─────────────────────────────── */
-.cor-insight-wrap {
-  padding: 28px 32px 8px;
-  max-width: 860px;
-}
 
-.cor-insight {
-  display: none;
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.97rem;
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.82);
-  animation: corFadeIn 0.35s ease;
-}
+  /* ── Correlation insight text ─────────────────────────────── */
+  .cor-insight-wrap {
+    padding: 28px 32px 8px;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
 
-.cor-insight.active {
-  display: block;
-}
+  .cor-insight {
+    display: none;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.82);
+    animation: corFadeIn 0.35s ease;
+  }
 
-@keyframes corFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0);   }
-}
+  .cor-insight.active {
+    display: block;
+  }
+
+  @keyframes corFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }

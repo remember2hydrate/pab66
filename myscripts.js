@@ -211,44 +211,44 @@ const mapSection = document.querySelector('.map-section');
       fadeObserver.observe(fadePair);
     }
 
-// Navbar section-reveal logic
-const siteNav = document.getElementById('siteNav');
+// ── Navbar section-reveal logic (disabled — navbar is always visible) ──────
+// const siteNav = document.getElementById('siteNav');
 
-const navSectionMap = {
-  'hero':           document.querySelector('.hero'),
-  'content':        document.getElementById('content'),
-  'district-trends':document.getElementById('district-trends'),
-  'eu-dashboard':document.getElementById('eu-dashboard'),
-  'eu-correlations':document.getElementById('eu-correlations'),
-  'article-grid':   document.getElementById('article-grid'),
-  'conclusion':     document.getElementById('conclusion'),
-};
+// const navSectionMap = {
+//   'hero':           document.querySelector('.hero'),
+//   'content':        document.getElementById('content'),
+//   'district-trends':document.getElementById('district-trends'),
+//   'eu-dashboard':document.getElementById('eu-dashboard'),
+//   'eu-correlations':document.getElementById('eu-correlations'),
+//   'article-grid':   document.getElementById('article-grid'),
+//   'conclusion':     document.getElementById('conclusion'),
+// };
 
-const navItems = document.querySelectorAll('.nav-item[data-nav]');
+// const navItems = document.querySelectorAll('.nav-item[data-nav]');
 
-const navSectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const sectionId = entry.target.dataset.observedNav;
-    const navItem = document.querySelector(`.nav-item[data-nav="${sectionId}"]`);
-    if (!navItem) return;
+// const navSectionObserver = new IntersectionObserver((entries) => {
+//   entries.forEach(entry => {
+//     const sectionId = entry.target.dataset.observedNav;
+//     const navItem = document.querySelector(`.nav-item[data-nav="${sectionId}"]`);
+//     if (!navItem) return;
 
-    if (entry.isIntersecting) {
-      siteNav.classList.add('nav-visible');
-      navItem.classList.add('link-visible');
-      // Mark as active, remove from all others
-      navItems.forEach(i => i.querySelector('.nav-link').classList.remove('active'));
-      navItem.querySelector('.nav-link').classList.add('active');
-    }
-    // Never remove link-visible — items accumulate and stay
-  });
-}, { threshold: 0.15 });
+//     if (entry.isIntersecting) {
+//       siteNav.classList.add('nav-visible');
+//       navItem.classList.add('link-visible');
+//       // Mark as active, remove from all others
+//       navItems.forEach(i => i.querySelector('.nav-link').classList.remove('active'));
+//       navItem.querySelector('.nav-link').classList.add('active');
+//     }
+//     // Never remove link-visible — items accumulate and stay
+//   });
+// }, { threshold: 0.15 });
 
-Object.entries(navSectionMap).forEach(([id, el]) => {
-  if (el) {
-    el.dataset.observedNav = id;
-    navSectionObserver.observe(el);
-  }
-});
+// Object.entries(navSectionMap).forEach(([id, el]) => {
+//   if (el) {
+//     el.dataset.observedNav = id;
+//     navSectionObserver.observe(el);
+//   }
+// });
 
 
 // ─────────────────────────────────────────────────────────────
@@ -500,11 +500,11 @@ requestAnimationFrame(() => setTimeout(preloadAll, 400));
 //  CORRELATIONS SECTION
 // ─────────────────────────────────────────────────────────────
 const COR_PLOTS = {
-  'GDP':                        'visualizations/Correlations_GDP in PPS.html',
+  'GDP':                        'visualizations/Correlations_GDP [PPS].html',
   'Mean Income':                'visualizations/Correlations_Mean Income.html',
   'Median Income':              'visualizations/Correlations_Median Income.html',
-  'People at risk of poverty':  'visualizations/Correlations_People at risk of poverty.html',
-  'Inability to keep home warm':'visualizations/Correlations_Inability to keep home warm.html',
+  'People at risk of poverty':  'visualizations/Correlations_People at risk of poverty [%].html',
+  'Inability to keep home warm':'visualizations/Correlations_Inability to keep home warm [%].html',
 };
 
 const frameCor   = document.getElementById('frame-cor');
