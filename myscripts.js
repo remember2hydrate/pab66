@@ -1,17 +1,3 @@
-const mapSection = document.querySelector('.map-section');
-
-    const mapObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          mapSection.classList.add('visible');
-        } else {
-          mapSection.classList.remove('visible');
-        }
-      });
-    }, { threshold: 0.35 });
-
-    mapObserver.observe(mapSection);
-
     const trendsSection = document.getElementById('district-trends');
     const singleFigureShell = document.getElementById('singleFigureShell');
     const singleFigureShell2 = document.getElementById('singleFigureShell2');
@@ -192,7 +178,7 @@ const mapSection = document.querySelector('.map-section');
       rootMargin: "0px 0px -8% 0px"
     });
 
-    trendsEntranceObserver.observe(trendsSection);
+   
 
     const fadePair = document.querySelector('.fade-pair');
     const fadeObserver = new IntersectionObserver((entries) => {
