@@ -453,43 +453,10 @@ slider.addEventListener('input', () => {
   update();   // year changed → reload both panels
 });
 
-// ── Happiness iframe: fit-to-panel scaling ───────────────────
-// Native Plotly figure dimensions (from Mental_health_20xx.html)
-const HAPPINESS_NATIVE_W = 1200;
-const HAPPINESS_NATIVE_H = 750;
-
-function scaleHappinessFrame() {
-  const panel = document.querySelector('.eu-happiness-panel');
-  if (!panel || !frameHappiness) return;
-
-  const panelW = panel.clientWidth;
-  const panelH = panel.clientHeight;
-  if (!panelW || !panelH) return;
-
-  const scaleX = panelW / HAPPINESS_NATIVE_W;
-  const scaleY = panelH / HAPPINESS_NATIVE_H;
-  const scale  = Math.min(scaleX, scaleY);
-
-  // Set iframe to native size, then translate it so it stays
-  // inside the top-left corner after scaling
-  frameHappiness.style.width     = HAPPINESS_NATIVE_W + 'px';
-  frameHappiness.style.height    = HAPPINESS_NATIVE_H + 'px';
-  // Use scale + negative margin trick so layout width = panelW, not 1200px
-  frameHappiness.style.transform        = `scale(${scale})`;
-  frameHappiness.style.transformOrigin  = 'top left';
-  frameHappiness.style.marginRight      = (panelW - HAPPINESS_NATIVE_W) + 'px';
-  frameHappiness.style.marginBottom     = (panelH - HAPPINESS_NATIVE_H) + 'px';
-}
-
-window.addEventListener('resize', scaleHappinessFrame);
-frameHappiness.addEventListener('load', scaleHappinessFrame);
-
 // ── Init ─────────────────────────────────────────────────────
 updateSliderFill(currentYear);
 updateTicks(currentYear);
 update();
-// Run after layout so clientWidth is available
-requestAnimationFrame(scaleHappinessFrame);
 
 // Start background preloading ~400ms after first paint so the
 // visible frames get priority bandwidth first.
@@ -539,3 +506,20 @@ corTabBar.querySelectorAll('.eu-tab').forEach(btn => {
 
 // Init — load iframe + show matching insight text
 updateCor();
+
+
+
+const iframe = document.getElementById('frame-happiness');
+
+iframe.onload = () => {
+    const innerWindow = iframe.contentWindow;
+    const innerDoc = iframe.contentDocument;
+
+    // Wait a bit in case content renders dynamically
+    setTimeout(() => {
+        innerWindow.scrollTo(
+            innerDoc.body.scrollWidth,
+            0
+        );
+    }, 100);
+};

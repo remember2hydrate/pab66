@@ -1134,27 +1134,32 @@ height: calc((420px - 28px) / 3);   /* (map height - 2 gaps) / 3 */
 
 /* ── Happiness column ── */
 .eu-happiness-col {
-display: flex;
-flex-direction: column;
-align-self: stretch;   /* fill the full grid row height */
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
 }
 
 .eu-happiness-col .eu-happiness-panel {
-flex: 1;               /* grow to fill whatever height the grid gives */
-height: 0;             /* flex: 1 overrides this; needed to prevent auto-sizing */
-overflow: hidden;
-position: relative;
+  flex: 1;
+  height: 420px;       /* same as map panel; flex:1 can grow beyond this */
+  min-height: 420px;
+  overflow: auto;
+  position: relative;
 }
 
-/* iframe rendered at native size, JS scales it to fill the panel */
+.eu-happiness-panel {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Happiness iframe fills its panel — scrolling enabled so legend is reachable */
 #frame-happiness {
-position: absolute;
-top: 0;
-left: 0;
-border: none;
-display: block;
-transform-origin: top left;
-/* width, height, transform set by JS */
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  overflow: scroll;
 }
 
 /* iframes fill panel */
