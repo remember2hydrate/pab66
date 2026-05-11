@@ -1355,3 +1355,36 @@ font-weight: 700;
   .about-text{
     text-align: center;
   }
+/* ─────────────────────────────────────────────────────────────
+   AGE DASHBOARD SECTION
+   Mirror of .eu-dashboard-* but scoped to the age section.
+   ───────────────────────────────────────────────────────────── */
+.age-dashboard-section {
+  background: #0e2b1c;
+  padding: 48px 5vw 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.age-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.age-left-col,
+.age-mental-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .age-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

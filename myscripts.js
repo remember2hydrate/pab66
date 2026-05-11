@@ -288,7 +288,16 @@ const PLOTS = {
   life:   null,
   trust:  null,
   mental: null,
-  happiness: year => `visualizations/Mental_health_${year}.html`,
+  happiness: year => {
+    // Pick the pre-rendered static variant that best matches the current viewport.
+    // Breakpoints mirror the three sets of files produced offline:
+    //   wide   → curved / ultrawide monitors  (≥ 1400 px)  → 1400 × 820
+    //   laptop → standard laptop / desktop    (768–1399 px) →  900 × 600
+    //   mobile → phone / small tablet         (<  768 px)   →  480 × 680
+    const w = window.innerWidth;
+    const variant = w >= 1400 ? 'wide' : w >= 768 ? 'laptop' : 'mobile';
+    return `visualizations/Mental_health_${year}_${variant}.html`;
+  },
 };
 
 // DOM refs
@@ -367,16 +376,20 @@ function preloadAll() {
     });
   });
 
-  // Happiness panel: preload all Mental_health files
+  // Happiness panel: preload all 3 responsive variants for every year
+  // so switching breakpoints (e.g. resizing) is instant from cache.
+  const HAPPINESS_VARIANTS = ['wide', 'laptop', 'mobile'];
   YEARS.forEach(year => {
-    const src = PLOTS.happiness(year);
-    if (preloadCache.has(src)) return;
-    preloadCache.add(src);
-    const f = document.createElement('iframe');
-    f.src = src;
-    f.setAttribute('loading', 'lazy');
-    f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-    preloadPool.appendChild(f);
+    HAPPINESS_VARIANTS.forEach(variant => {
+      const src = `visualizations/Mental_health_${year}_${variant}.html`;
+      if (preloadCache.has(src)) return;
+      preloadCache.add(src);
+      const f = document.createElement('iframe');
+      f.src = src;
+      f.setAttribute('loading', 'lazy');
+      f.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+      preloadPool.appendChild(f);
+    });
   });
 }
 
@@ -480,6 +493,32 @@ update();
 // visible frames get priority bandwidth first.
 requestAnimationFrame(() => setTimeout(preloadAll, 400));
 
+// ── Responsive happiness reload on window resize ─────────────
+// When the user resizes across a breakpoint boundary, swap in the
+// correctly-sized static variant so the chart is never clipped.
+(function watchBreakpoint() {
+  function getVariant() {
+    const w = window.innerWidth;
+    return w >= 1400 ? 'wide' : w >= 768 ? 'laptop' : 'mobile';
+  }
+  let lastVariant = getVariant();
+
+  // Debounce — only act 200 ms after resize stops
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const v = getVariant();
+      if (v !== lastVariant) {
+        lastVariant = v;
+        // Force-clear current src so loadSlot doesn't skip the reload
+        frameHappiness.src = '';
+        updateYear();
+      }
+    }, 200);
+  });
+})();
+
 
 // ─────────────────────────────────────────────────────────────
 //  CORRELATIONS SECTION
@@ -529,3 +568,65 @@ updateCor();
 
 // Scroll-to-top-right on happiness frame is now handled via
 // scrollHappinessToTopRight() passed as a callback into loadSlot().
+
+// ─────────────────────────────────────────────────────────────
+//  AGE DASHBOARD — static files, no year dimension
+// ─────────────────────────────────────────────────────────────
+const AGE_FINANCIAL_PLOTS = {
+  'Mean Income':               'visualizations/Mean_income_age_bar_line.html',
+  'Median Income':             'visualizations/Median_income_age_bar_line.html',
+  'People at risk of poverty': 'visualizations/Risk_of_poverty_age_bar_line.html',
+};
+
+const AGE_MENTAL_PLOTS = {
+  'Self Perceived Health':   'visualizations/Self_perceived_health_age_bar_line.html',
+  'Trust in People':         'visualizations/Trust_in_persons_age_bar_line.html',
+  'Self Harm':               'visualizations/Deaths_self_harm_age_bar_line.html',
+  'Death by Alcohol Mental': 'visualizations/Deaths_alcohol_mental_disorders_age_bar_line.html',
+  'Overall Satisfaction':    'visualizations/Overall_satisfaction_age_bar_line.html',
+};
+
+(function initAgeDashboard() {
+  const frameFinancial  = document.getElementById('frame-age-financial');
+  const frameMental     = document.getElementById('frame-age-mental');
+  const financialTabBar = document.getElementById('ageFinancialBar');
+  const mentalTabBar    = document.getElementById('ageMentalBar');
+
+  if (!frameFinancial || !frameMental || !financialTabBar || !mentalTabBar) return;
+
+  let ageCurrentFinancial = 'Mean Income';
+  let ageCurrentMental    = 'Self Perceived Health';
+
+  function updateAgeFinancial() {
+    const src = AGE_FINANCIAL_PLOTS[ageCurrentFinancial];
+    if (src) loadSlot(frameFinancial, 'shimmer-age-financial', src);
+  }
+
+  function updateAgeMental() {
+    const src = AGE_MENTAL_PLOTS[ageCurrentMental];
+    if (src) loadSlot(frameMental, 'shimmer-age-mental', src);
+  }
+
+  // Tab listeners
+  financialTabBar.querySelectorAll('.eu-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      financialTabBar.querySelectorAll('.eu-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ageCurrentFinancial = btn.dataset.metric;
+      updateAgeFinancial();
+    });
+  });
+
+  mentalTabBar.querySelectorAll('.eu-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mentalTabBar.querySelectorAll('.eu-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ageCurrentMental = btn.dataset.metric;
+      updateAgeMental();
+    });
+  });
+
+  // Init — load default tab for each panel on page load
+  updateAgeFinancial();
+  updateAgeMental();
+})();

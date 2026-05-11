@@ -57,8 +57,8 @@
     </a>
   </section>  
 
-  <section id="content" class="map-section">
-    <iframe
+  <!--section id="content" class="map-section">
+    <--iframe
       src="visualizations/sf_prostitution_heatmap.html"
       class="map-frame"
       loading="lazy">
@@ -71,7 +71,7 @@
         Also, the heatmap also reveals how these patterns have evolved over the years: the trends show a gradual reduction in the intensity of the hotspots, especially in the later years.
       </p>
     </div>
-  </section>
+  </section-->
 
   <!-- ── European Wealth Dashboard ── -->
   <section id="eu-dashboard" class="eu-dashboard-section">
@@ -207,7 +207,49 @@
 
   </section>
 
-  <section class="trends-scroll-section" id="district-trends">
+  <!-- ── Dashboard ── -->
+  <section id="age-dashboard" class="age-dashboard-section">
+    <!-- Two-column layout -->
+    <div class="age-dashboard-grid">
+ 
+      <!-- LEFT: Financial indicators -->
+      <div class="age-left-col">
+        <nav class="eu-tab-bar" id="ageFinancialBar">
+          <button class="eu-tab active" data-metric="Mean Income">Mean Income</button>
+          <button class="eu-tab" data-metric="Median Income">Median Income</button>
+          <button class="eu-tab" data-metric="People at risk of poverty">People at Risk of Poverty</button>
+        </nav>
+        <div class="eu-panel eu-map-panel">
+          <div class="eu-shimmer" id="shimmer-age-financial"></div>
+          <iframe id="frame-age-financial" title="Financial indicator by age" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
+      </div>
+ 
+      <!-- RIGHT: Mental / wellbeing indicators -->
+      <div class="age-mental-col">
+        <nav class="eu-tab-bar" id="ageMentalBar">
+          <button class="eu-tab active" data-metric="Self Perceived Health">Self Perceived Health</button>
+          <button class="eu-tab" data-metric="Trust in People">Trust in People</button>
+          <button class="eu-tab" data-metric="Self Harm">Self Harm</button>
+          <button class="eu-tab" data-metric="Death by Alcohol Mental">Death by Alcohol &amp; Mental</button>
+          <button class="eu-tab" data-metric="Overall Satisfaction">Overall Satisfaction</button>
+        </nav>
+        <div class="eu-panel eu-map-panel">
+          <div class="eu-shimmer" id="shimmer-age-mental"></div>
+          <iframe id="frame-age-mental" title="Mental indicator by age" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <br><br>
+ 
+  </section>
+
+  
+
+
+  <!--section class="trends-scroll-section" id="district-trends">
     <div class="trends-sticky">
       <div class="trends-layout">
 
@@ -293,7 +335,7 @@
 
         <div class="trends-visual-side">
           <div class="visual-stage">
-            <!-- BACKGROUND IMAGE (ALL DISTRICTS) -->
+          
             <div class="single-figure-shell background-figure" id="singleFigureShell">
               <img
                 src="images/yearly_Prostitution_trends.png"
@@ -301,7 +343,7 @@
               >
             </div>
 
-            <!-- FOREGROUND IMAGE (SINGLE DISTRICT) -->
+          
             <div class="single-figure-shell-2" id="singleFigureShell2">
               <img
                 src="images/Southern_prostitution_trends.png"
@@ -313,7 +355,7 @@
         </div>
         </div>
     </div>
-  </section>
+  </section-->
 
   <section class="closing-scroll-section" id="closing-scroll">
     <div class="closing-sticky">
@@ -332,7 +374,7 @@
     </div>
   </section>
 
-  <section class="article-grid-section" id="article-grid">
+  <!--section class="article-grid-section" id="article-grid">
     <div class="article-grid-inner">
 
       <article class="article-block">
@@ -412,7 +454,7 @@
       </article>
 
     </div>
-  </section>
+  </section-->
 
   <section class="conclusion-section" id="conclusion">
     <div class="conclusion-inner fade-pair">
