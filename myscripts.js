@@ -500,11 +500,11 @@ requestAnimationFrame(() => setTimeout(preloadAll, 400));
 //  CORRELATIONS SECTION
 // ─────────────────────────────────────────────────────────────
 const COR_PLOTS = {
-  'GDP':                        'visualizations/Correlations_GDP [PPS].html',
+  'GDP':                        'visualizations/Correlations_GDP.html',
   'Mean Income':                'visualizations/Correlations_Mean Income.html',
   'Median Income':              'visualizations/Correlations_Median Income.html',
-  'People at risk of poverty':  'visualizations/Correlations_People at risk of poverty [%].html',
-  'Inability to keep home warm':'visualizations/Correlations_Inability to keep home warm [%].html',
+  'People at risk of poverty':  'visualizations/Correlations_People at risk of poverty.html',
+  'Inability to keep home warm':'visualizations/Correlations_Inability to keep home warm.html',
 };
 
 const frameCor   = document.getElementById('frame-cor');
