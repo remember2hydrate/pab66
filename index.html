@@ -28,10 +28,9 @@
       <div class="collapse navbar-collapse justify-content-center" id="mainNav">
         <ul class="navbar-nav">
           <li class="nav-item" data-nav="hero"><a class="nav-link" href="#">About</a></li>
-          <li class="nav-item" data-nav="content"><a class="nav-link" href="#content">Heatmap</a></li>
           <li class="nav-item" data-nav="eu-dashboard"><a class="nav-link" href="#eu-dashboard">Income and Happiness Dashboard</a></li>
           <li class="nav-item" data-nav="eu-correlations"><a class="nav-link" href="#eu-correlations">Correlations</a></li>
-          <li class="nav-item" data-nav="article-grid"><a class="nav-link" href="#factors">Factors</a></li>
+          <li class="nav-item" data-nav="article-grid"><a class="nav-link" href="#eu-age">Deep Dive</a></li>
           <li class="nav-item" data-nav="conclusion"><a class="nav-link" href="#conclusion">Conclusion</a></li>          
           <li class="nav-item" data-nav="analysis-notebook"><a class="nav-link" href="#analysis-notebook">Analysis Notebook</a></li>
         </ul>
@@ -40,7 +39,7 @@
     </div>
   </nav>
 
-  <section class="hero">
+  <section id="hero" class="hero">
     <div class="hero-content">
       <div class="hero-tag">About</div>
       <h1><i>Can</i> money buy happiness?</h1>
@@ -73,10 +72,81 @@
 
   <!-- ── European Wealth Dashboard ── -->
   <section id="eu-dashboard" class="eu-dashboard-section">
+    <article class="article-block">
+      <p>To investigate this, we use datasets from Eurostat, which provide insights into both financial conditions and happiness-related indicators across European countries.</p>
+      <!--br-->
+      <p>In the following table, we provide an overview of the data used in the analysis. We focus on 11 key figures that cover both financial and hapiness health-related aspects:</p>
 
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Type</th>
+            <th>Key Figure</th>
+            <th>Explanation of the key figure</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Financial -->
+          <tr>
+            <td rowspan="5"><strong>Financial</strong></td>
+            <td>GDP in PPS</td>
+            <td>GDP per capita adjusted for purchasing power across countries</td>
+          </tr>
+          <tr>
+            <td>Mean Income</td>
+            <td>Mean income per country</td>
+          </tr>
+          <tr>
+            <td>Median Income</td>
+            <td>Median income per country</td>
+          </tr>
+          <tr>
+            <td>People at risk of poverty (%)</td>
+            <td>Share of population earning below 60% of the national median income</td>
+          </tr>
+          <tr>
+            <td>Inability to keep home warm (%)</td>
+            <td>Share of people unable to keep their home adequately warm</td>
+          </tr>
+      
+          <!-- Mental health -->
+          <tr>
+            <td rowspan="6"><strong>Mental health</strong></td>
+            <td>Population percentage of deaths due to mental disorders due to alcohol (%)</td>
+            <td>Percentage of the population which died due to mental disorders due to alcohol</td>
+          </tr>
+          <tr>
+            <td>Population percentage of deaths due to intentional self-harm (%)</td>
+            <td>Percentage of the population which died due to intentional self-harm</td>
+          </tr>
+          <tr>
+            <td>Life Satisfaction Rating (0-10)</td>
+            <td>How satisfied people are with their life overall, rated 0–10</td>
+          </tr>
+          <tr>
+            <td>Overall Satisfaction Rating (0-10)</td>
+            <td>How satisfied people are with their life overall, rated 0–10, broken down by household type and income level</td>
+          </tr>
+          <tr>
+            <td>Self-perceived health (%)</td>
+            <td>Self-rated general health split by income quintile</td>
+          </tr>
+          <tr>
+            <td>Trust in persons (%)</td>
+            <td>How much people trust strangers, rated 0–10</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Based on these key figures, the first visualization allows you to explore the data on your own. On the left-hand side, you can see a map displaying all financial indicators for the selected year, which can be adjusted using the time slider below. On the right-hand side, the corresponding mental health data for the same year is shown.</p>
+    </article>
+
+    <div class="hero hero-content">
+      <h3>Feel free to interact with the visualization and explore the data! </h3>  
+      <h3>The goal here is to build an initial understanding and form your own first impressions before diving deeper into the analysis.</h3>  
+    </div>
     <!-- Two-column layout -->
     <div class="eu-dashboard-grid">
-  
       <!-- LEFT: map column with tab bar sitting only above it -->
       <div class="eu-left-col">
         <nav class="eu-tab-bar" id="euTabBar">
@@ -115,33 +185,32 @@
     <br> <br>
   
     <!-- Hidden preload pool -->
-    <div id="preload-pool" style="display:none"></div>
-
-    <div class="article-grid-inner">
-
-      <article class="article-block">
-        
-        <p> After this first insight, we now want to give you a better feeling for how the different variables are related to each other. </p>
-        <h3>But first: what is a correlation?</h3>
-        <p> Think of correlation as a way to describe how two variables move together. For example, if two variables are positively correlated, it means that when one increases, the other tends to increase as well. If they are negatively correlated, one goes up while the other goes down. And if there is no clear pattern, then the variables are likely not correlated.</p> 
-        <p> In the following plots, you can see the relationship between financial indicators (on the y-axis) and mental indicators (on the x-axis). Each point represents one observation (e.g. one country in one year). The red line shows the overall trend of the relationship.</p>
-        <h3>Interpreting the plots is quite straightforward:</h3>
-        <p> • If the red line slopes upwards, the variables are positively correlated.</p>
-        <p> • If it slopes downwards, the correlation is negative.</p>
-        <p> • If the line is more or less flat, there is no clear linear relationship between the variables.</p>
-        <p> One important note: the data has been standardized before plotting. This means that the absolute values in the graphs are not directly comparable to real-world units. What really matters here is the direction and strength of the relationship shown by the trend line.</p>
-      </article>
-    </div>
-  
+    <div id="preload-pool" style="display:none"></div>  
   </section>
   
 
   <!-- ── Correlations Section ── -->
   <section id="eu-correlations" class="eu-correlations-section">
-
-    <article class="article-block">
-
-      <br>
+    <div class="article-grid-inner">
+      <article class="article-block">
+        
+          <p> After this first insight, we now want to give you a better feeling for how the different variables are related to each other. </p>
+          <h3>But first: what is a correlation?</h3>
+          <p> Think of correlation as a way to describe how two variables move together. For example, if two variables are positively correlated, it means that when one increases, the other tends to increase as well. If they are negatively correlated, one goes up while the other goes down. And if there is no clear pattern, then the variables are likely not correlated.</p> 
+          <p> In the following plots, you can see the relationship between financial indicators (on the y-axis) and mental indicators (on the x-axis). Each point represents one observation (e.g. one country in one year). The red line shows the overall trend of the relationship.</p>
+          <h3>Interpreting the plots is quite straightforward:</h3>
+          <p> • If the red line slopes upwards, the variables are positively correlated.</p>
+          <p> • If it slopes downwards, the correlation is negative.</p>
+          <p> • If the line is more or less flat, there is no clear linear relationship between the variables.</p>
+          <p> One important note: the data has been standardized before plotting. This means that the absolute values in the graphs are not directly comparable to real-world units. </p>
+      
+      </article>
+    </div>
+      
+    
+      <div class="hero hero-content">
+        <h3>What really matters here is the direction and strength of the relationship shown by the trend line.</h3>    
+      </div>
 
       <nav class="eu-tab-bar eu-cor-tab-bar" id="corTabBar">
         <button class="eu-tab active" data-metric="GDP">GDP</button>
@@ -203,15 +272,24 @@
           financial indicator is strongly negatively correlated with both life satisfaction and overall
           satisfaction.
         </p>
-  
+      </div>
 
     </article>
-    </div>
 
   </section>
 
   <!-- ── Dashboard ── -->
-  <section id="age-dashboard" class="age-dashboard-section">
+  <section id="eu-age" class="age-dashboard-section"> 
+    <article class="article-block">
+      <p>After getting an initial sense of the correlations between financial and happiness-related attributes, we now want to dive a bit deeper into some of these factors. To do so, we analyzed the data by sex and across four age groups, excluding the 0–15 category to keep the focus on the working population.</p>
+      <p>In the following visualization, you’ll find financial key figures on the left and happiness indicators on the right. Each key figure is shown in three versions: one for males, one for females, and one for the total population. The x-axis displays European countries, while the y-axis shows the corresponding values.</p>    
+      <p>The bar charts represent the overall values per sex and country, while the lines indicate the different age groups. </p>
+    </article>
+    
+    <div class="hero hero-content">
+      <h3>Take your time to explore the visuals and uncover more detailed insights within the data!</h3>    
+    </div>
+
     <!-- Two-column layout -->
     <div class="age-dashboard-grid">
  
@@ -248,9 +326,6 @@
     <br><br>
  
   </section>
-
-  
-
 
   <!--section class="trends-scroll-section" id="district-trends">
     <div class="trends-sticky">
@@ -360,22 +435,6 @@
     </div>
   </section-->
 
-  <section class="closing-scroll-section" id="closing-scroll">
-    <div class="closing-sticky">
-      <div class="closing-stage-wrap">
-        <div class="closing-stage closing-question" data-stage="question">
-          <h2>The question is: what's the real story behind the decrease in prostitution in San Francisco?</h2>
-        </div>
-
-        <div class="closing-stage closing-paragraph" data-stage="p1">
-          <p>
-            What needs to be noted is that the decrease in prostitution-related incidents in San Francisco does not necessarily indicate a reduction in the actual prevalence of prostitution.
-            The lower reported incidents may reflect changes in law enforcement priorities, reporting practices, or the displacement of prostitution to other areas or online platforms.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!--section class="article-grid-section" id="article-grid">
     <div class="article-grid-inner">
@@ -459,19 +518,46 @@
     </div>
   </section-->
 
-  <section class="conclusion-section" id="conclusion">
+  <section class="conclusion-section" >
     <div class="conclusion-inner fade-pair">
       <div class="conclusion-text">
-        <h3>Beyond the decline</h3>
+        <h3>As you’ve probably noticed, this topic is complex in more than one way.</h3>
         <p>
-          The decline in prostitution-related incidents in San Francisco should be read cautiously. The data strongly suggest that visible street prostitution changed in form and geography rather than simply disappearing.
-          Gentrification, policing changes, legal reforms, and the rise of online solicitation all seem to have reshaped where and how prostitution-related activity appears in official records.
-          In some districts, declining counts may reflect displacement, reduced street visibility, or altered enforcement priorities rather than a true disappearance of the activity itself.
-          Taken together, the pattern is less a clean story of reduction and more a story of transformation.
+          Some parts of the data suggest a clear relationship between financial factors and happiness, while others seem to challenge that idea. 
+             Of course, poverty can come with serious limitations, and financial stability can create a sense of security. 
+             At the same time, having a lot of wealth can also bring stress or the fear of losing it.
         </p>
+      </div>
+
+      <div class="conclusion-text">
+        <h3>It’s also important to keep in mind that data can only show general patterns and trends.</h3>
+        <p>
+          It doesn’t capture personal experiences, individual values, or what happiness truly means to each person. 
+          Factors like culture, background, and life situation play a huge role here and can’t be fully reflected in numbers.
+
+        </p>
+      </div>
+      
+      <div class="conclusion-text">
+        <h3>You might have noticed that we intentionally avoided interpreting the data too strongly. </h3>
+        <p>
+          We kept everything open on purpose. The reason is simple: we believe everyone should form their own opinion on this question. 
+          In the end, the answer is subjective. You can rely on the data we’ve shown you or reflect on your own experiences. 
+        </p>
+      </div>
+
+      <div class="conclusion-text">
+        <p>What really matters is that you feel comfortable with your final answer to the question: </p>
+        <h3>Can money buy happiness? </h3>
       </div>
     </div>
   </section>
+
+
+  
+  
+
+  
 
   <!-- ANALYSIS NOTEBOOK SECTION -->
   <section id="analysis-notebook">
@@ -511,33 +597,33 @@
   <section class="references-section" id="references">
     <div class="references-inner">
       <h2 class="references-title">References</h2>
-      <ol class="references-list">
+      <ol class="references-list"> 
         <li id="ref1">
-          <a href="https://data.sfgov.org/browse?category=Public+Safety&sortBy=relevance&page=1&pageSize=20" target="_blank" rel="noopener noreferrer">
-            Data source: San Francisco Police Department crime data (2003-2018 and 2018-2025)
+          <a href="https://happy-city-index.com/" target="_blank" rel="noopener noreferrer">
+            Ranking of the happiest cities in the world
           </a>
         </li>
         <li id="ref2">
-          <a href="https://www.urbandisplacement.org/wp-content/uploads/2021/08/sf_final.pdf" target="_blank" rel="noopener noreferrer">
-            Rising Housing Costs and Re-Segregation in San Francisco, UC Berkeley’s Urban Displacement Project and the California Housing Partnership
+          <a href="https://ec.europa.eu/eurostat/data/database" target="_blank" rel="noopener noreferrer">
+            Eurostat database
           </a>
         </li>
         <li id="ref3">
-          <a href="https://5743rdstcentralapartments.com/2025/01/28/the-soma-district-from-industrial-hub-to-tech-center/" target="_blank" rel="noopener noreferrer">
-            The South of Market District of SF from industrial hub to tech center, 5743rd Street Central Apartments
+          <a href="https://ec.europa.eu/eurostat/databrowser/view/tps00001/default/table?lang=en" target="_blank" rel="noopener noreferrer">
+            Population dataset - Eurostat database
           </a>
         </li>
         <li id="ref4">
-          <a href="https://www.structuremag.org/article/salesforce-tower/" target="_blank" rel="noopener noreferrer">
-            Salesforce Tower in San Francisco, Structure Magazine
+          <a href="https://data.dtu.dk/articles/dataset/Shapefile_of_European_countries/23686383" target="_blank" rel="noopener noreferrer">
+            Shapefile of European countries
           </a>
         </li>
         <li id="ref5">
-          <a href="https://www.inside-guide-to-san-francisco-tourism.com/san-francisco-crime.html#:~:text=Violent%20crimes%20are%20concentrated%20in,other%20cities%2C%20especially%20U.S%20ones" target="_blank" rel="noopener noreferrer">
-            Inside Guide to San Francisco Tourism, Crime in San Francisco
+          <a href="https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_AUT_0.json" target="_blank" rel="noopener noreferrer">
+            Shapefile of Austria
           </a>
         </li>
-        <li id="ref6">
+        <!--li id="ref6">
           <a href="https://www.businessinsider.com/prostitution-homelessness-and-drugs-surround-twitters-new-hq-2014-3" target="_blank" rel="noopener noreferrer">
             Prostitution, homelessness and drugs surround Twitter’s new HQ in San Francisco, Business Insider
           </a>
@@ -631,7 +717,7 @@
           <a href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202120220SB357" target="_blank" rel="noopener noreferrer">
             California Legislative Information, Senate Bill No. 357 (Safer Streets Act)
           </a>
-        </li>
+        </li-->
       </ol>
     </div>
     </section>
