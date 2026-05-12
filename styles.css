@@ -1588,9 +1588,72 @@ font-weight: 700;
   }
 }
 
-.hero-prompt{
+/* =========================
+   PROMPT SCROLL SECTIONS
+   Mirror of conclusion-scroll-section for hero-prompt blocks
+   ========================= */
+
+.prompt-scroll-section {
+  position: relative;
+  height: 200vh;
+  background: #0e2b1c;
+}
+
+.prompt-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12vh 8vw;
+  background: #0e2b1c;
+  overflow: hidden;
+}
+
+.prompt-stage-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prompt-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    visibility 0s linear 0.45s;
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+.prompt-stage.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    visibility 0s linear 0s;
+}
+
+.prompt-stage h3 {
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2.1rem, 3vw, 3.5rem);
-  line-height: 0.95;
+  line-height: 1.05;
   font-weight: 400;
   color: #f6f2eb;
   max-width: 850px;

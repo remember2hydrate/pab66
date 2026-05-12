@@ -593,6 +593,74 @@ updateCor();
 // scrollHappinessToTopRight() passed as a callback into loadSlot().
 
 // ─────────────────────────────────────────────────────────────
+//  PROMPT SCROLL SECTIONS — mirror of conclusion scroll logic
+// ─────────────────────────────────────────────────────────────
+(function initPromptScrollSections() {
+  const TRANSITION_MS = 700;
+
+  function initSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const stages = Array.from(section.querySelectorAll('.prompt-stage'));
+    if (!stages.length) return;
+
+    // For single-stage sections, always show stage 0 — no scroll logic needed
+    if (stages.length === 1) {
+      stages[0].classList.add('active');
+      return;
+    }
+
+    let currentStage = 0;
+    let locked = false;
+    let pending = null;
+
+    function showStage(index) {
+      stages.forEach(s => s.classList.remove('active'));
+      if (index >= 0 && index < stages.length) {
+        stages[index].classList.add('active');
+      }
+    }
+
+    function goToStage(target) {
+      if (target === currentStage) return;
+      if (locked) { pending = target; return; }
+      locked = true;
+      currentStage = target > currentStage
+        ? Math.min(currentStage + 1, stages.length - 1)
+        : Math.max(currentStage - 1, 0);
+      showStage(currentStage);
+      setTimeout(() => {
+        locked = false;
+        if (pending !== null && pending !== currentStage) {
+          const next = pending; pending = null; goToStage(next);
+        } else { pending = null; }
+      }, TRANSITION_MS);
+    }
+
+    function update() {
+      const rect = section.getBoundingClientRect();
+      const scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.min(Math.max(-rect.top / scrollable, 0), 1);
+      const desired = Math.min(stages.length - 1, Math.floor(progress * stages.length));
+      goToStage(desired);
+    }
+
+    // Show first stage immediately
+    showStage(0);
+
+    window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+  }
+
+  initSection('prompt-dashboard');
+  initSection('prompt-correlations');
+  initSection('prompt-age');
+})();
+
+// ─────────────────────────────────────────────────────────────
 //  AGE DASHBOARD — static files, no year dimension
 // ─────────────────────────────────────────────────────────────
 const AGE_FINANCIAL_PLOTS = {
