@@ -224,58 +224,58 @@
         <button class="eu-tab" data-metric="Inability to keep home warm">Inability to keep home warm</button>
       </nav>
 
-      <div class="eu-panel eu-cor-panel">
-        <div class="eu-shimmer" id="shimmer-cor"></div>
-        <iframe id="frame-cor" title="Correlations" sandbox="allow-scripts allow-same-origin"></iframe>
-      </div>
+      <div class="cor-row">
 
-      <br>
+        <div class="eu-panel eu-cor-panel">
+          <div class="eu-shimmer" id="shimmer-cor"></div>
+          <iframe id="frame-cor" title="Correlations" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
 
-          <!-- ── Correlation insight text — swaps with the active tab ── -->
-      <div class="cor-insight-wrap">
-  
-        <p class="cor-insight active" data-cor-metric="GDP">
-          Gross Domestic Product <br>
-          In the plot above, one can see a clear positive correlation between GDP and life satisfaction,
-          overall satisfaction, and self-perceived health. The relationship between GDP and trust in persons
-          appears to be slightly weaker. In contrast, the population percentages of deaths due to self-harm
-          and alcohol show a slight negative correlation with GDP.
-        </p>
-  
-        <p class="cor-insight" data-cor-metric="Mean Income">
-          Mean Income <br>
-          The correlation plots indicate that mean income is weakly positively correlated with trust in
-          persons and the population percentage of deaths due to alcohol. At the same time, it shows a
-          strong positive correlation with life satisfaction, overall satisfaction, and self-perceived health.
-          In contrast, mean income is slightly negatively correlated with the population percentage of deaths
-          due to self-harm.
-        </p>
-  
-        <p class="cor-insight" data-cor-metric="Median Income">
-          Median Income <br>
-          For median income, a very similar pattern can be observed as for mean income. It is weakly
-          positively correlated with trust in persons and the population percentage of deaths due to alcohol,
-          while showing a strong positive correlation with life satisfaction, overall satisfaction, and
-          self-perceived health. In contrast, median income is slightly negatively correlated with the
-          population percentage of deaths due to self-harm.
-        </p>
-  
-        <p class="cor-insight" data-cor-metric="People at risk of poverty">
-          People at risk of poverty <br>
-          The visualizations show a slight negative correlation between the share of people at risk of
-          poverty and the population percentages of deaths, as well as with self-perceived health. In
-          addition, there is a strong negative correlation with life satisfaction and overall satisfaction.
-          The only mental indicator that shows a positive relationship is trust in persons, although this
-          correlation appears to be very weak.
-        </p>
-  
-        <p class="cor-insight" data-cor-metric="Inability to keep home warm">
-          Inability to keep home warm <br>
-          The figure shows that the inability to keep the house warm is slightly negatively correlated with
-          the population percentages of deaths as well as with self-perceived health. Additionally, this
-          financial indicator is strongly negatively correlated with both life satisfaction and overall
-          satisfaction.
-        </p>
+        <!-- ── Correlation insight card — slides in on each tab click ── -->
+        <div class="cor-insight-wrap">
+
+          <div class="cor-insight active" data-cor-metric="GDP">
+            <h2>Gross Domestic Product</h2>
+            <p>One can see a clear positive correlation between GDP and life satisfaction,
+            overall satisfaction, and self-perceived health. The relationship between GDP and trust in persons
+            appears to be slightly weaker. In contrast, the population percentages of deaths due to self-harm
+            and alcohol show a slight negative correlation with GDP.</p>
+          </div>
+
+          <div class="cor-insight" data-cor-metric="Mean Income">
+            <h2>Mean Income</h2>
+            <p>Mean income is weakly positively correlated with trust in
+            persons and deaths due to alcohol. At the same time, it shows a
+            strong positive correlation with life satisfaction, overall satisfaction, and self-perceived health.
+            In contrast, mean income is slightly negatively correlated with deaths due to self-harm.</p>
+          </div>
+
+          <div class="cor-insight" data-cor-metric="Median Income">
+            <h2>Median Income</h2>
+            <p>A very similar pattern emerges as for mean income. It is weakly
+            positively correlated with trust in persons and deaths due to alcohol,
+            while showing a strong positive correlation with life satisfaction, overall satisfaction, and
+            self-perceived health. Median income is slightly negatively correlated with deaths due to self-harm.</p>
+          </div>
+
+          <div class="cor-insight" data-cor-metric="People at risk of poverty">
+            <h2>People at Risk of Poverty</h2>
+            <p>There is a slight negative correlation between the share of people at risk of
+            poverty and death percentages, as well as with self-perceived health.
+            In addition, there is a strong negative correlation with life satisfaction and overall satisfaction.
+            The only indicator showing a positive relationship is trust in persons, though very weakly.</p>
+          </div>
+
+          <div class="cor-insight" data-cor-metric="Inability to keep home warm">
+            <h2>Inability to Keep Home Warm</h2>
+            <p>The inability to keep the house warm is slightly negatively correlated with
+            death percentages as well as with self-perceived health. Additionally, this
+            financial indicator is strongly negatively correlated with both life satisfaction and overall
+            satisfaction.</p>
+          </div>
+
+        </div>
+
       </div>
 
     </article>

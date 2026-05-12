@@ -490,9 +490,15 @@ let currentCorMetric = 'GDP';
 const corInsights = document.querySelectorAll('.cor-insight');
 
 function showCorInsight(metric) {
-  corInsights.forEach(p => {
-    const match = p.dataset.corMetric === metric;
-    p.classList.toggle('active', match);
+  corInsights.forEach(el => {
+    if (el.dataset.corMetric === metric) {
+      // Force re-trigger of the CSS slide-in animation on every tab click
+      el.classList.remove('active');
+      void el.offsetWidth; // reflow flush
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
   });
 }
 
