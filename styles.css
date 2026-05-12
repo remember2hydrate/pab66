@@ -1105,6 +1105,21 @@ flex-direction: column;
 gap: 0;
 }
 
+/* Column header banners */
+.eu-col-header {
+  background: #2d6a4f;
+  color: #ffffff;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
 /* Two-column grid */
 .eu-dashboard-grid {
 display: grid;
