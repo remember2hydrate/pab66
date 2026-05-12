@@ -1067,8 +1067,8 @@ color: rgba(82, 128, 110, 1) !important
 .article-block .table tbody td {
   padding: 0.6rem 1rem;
   vertical-align: middle;
-  border-right: 1px solid rgba(197, 154, 174, 0.12);
-  border-bottom: 1px solid rgba(197, 154, 174, 0.12);
+  border-right: 3px solid rgba(197, 154, 174, 0.12);
+  border-bottom: 3px solid rgba(197, 154, 174, 0.12);
   color: #f6f2eb;
   background: transparent;
 }
