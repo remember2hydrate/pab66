@@ -1471,3 +1471,11 @@ font-weight: 700;
     grid-template-columns: 1fr;
   }
 }
+
+.hero-prompt{
+  font-size: clamp(2.1rem, 3vw, 3.5rem);
+  line-height: 0.95;
+  font-weight: 400;
+  color: #f6f2eb;
+  max-width: 850px;
+}
