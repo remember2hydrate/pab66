@@ -1442,6 +1442,32 @@ color: #f6f2eb;
 font-weight: 700;
 }
 
+/* ── Table: prevent horizontal overflow on mobile ── */
+.article-block {
+  overflow-x: hidden;
+}
+
+.table-responsive-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 480px; /* allows scroll on very small screens instead of squishing */
+}
+
+@media (max-width: 600px) {
+  .table {
+    font-size: 0.8rem;
+  }
+  .table th,
+  .table td {
+    padding: 0.4rem 0.5rem;
+  }
+}
+
 /* Responsive: stack on small screens */
 @media (max-width: 768px) {
   .eu-dashboard-grid {
@@ -1561,8 +1587,19 @@ font-weight: 700;
     .cor-row {
       flex-direction: column;
     }
+    /* Plot panel: explicit height so it doesn't collapse */
+    .eu-cor-panel {
+      flex: none;
+      width: 100%;
+      aspect-ratio: unset;
+      height: 320px;
+      order: 1;
+    }
+    /* Insight card: always rendered below the plot */
     .cor-insight-wrap {
       flex: none;
+      width: 100%;
+      order: 2;
       border-radius: 0 0 8px 8px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
       padding: 1.6rem 1.4rem;
