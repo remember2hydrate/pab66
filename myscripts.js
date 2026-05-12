@@ -197,6 +197,73 @@ const trendsSection = document.getElementById('district-trends');
       fadeObserver.observe(fadePair);
     }
 
+    // ── Conclusion scroll-driven section ──────────────────────────────────
+    const conclusionScrollSection = document.getElementById('conclusion');
+    const conclusionStages = document.querySelectorAll('.conclusion-stage');
+
+    const conclusionStageOrder = ['q1', 'p1', 'q2', 'p2', 'q3', 'p3', 'final'];
+    let currentConclusionStage = -1;
+    let conclusionStageLocked = false;
+    let pendingConclusionStage = null;
+    const CONCLUSION_TRANSITION_MS = 700;
+
+    function showConclusionStageByIndex(index) {
+      conclusionStages.forEach(s => s.classList.remove('active'));
+      if (index < 0) return;
+      const stageName = conclusionStageOrder[index];
+      const target = document.querySelector(`.conclusion-stage[data-cstage="${stageName}"]`);
+      if (target) target.classList.add('active');
+    }
+
+    function goToConclusionStage(targetStage) {
+      if (targetStage === currentConclusionStage) return;
+      if (conclusionStageLocked) {
+        pendingConclusionStage = targetStage;
+        return;
+      }
+      conclusionStageLocked = true;
+      if (targetStage > currentConclusionStage) {
+        currentConclusionStage = Math.min(currentConclusionStage + 1, conclusionStageOrder.length - 1);
+      } else {
+        currentConclusionStage = Math.max(currentConclusionStage - 1, -1);
+      }
+      showConclusionStageByIndex(currentConclusionStage);
+      setTimeout(() => {
+        conclusionStageLocked = false;
+        if (pendingConclusionStage !== null && pendingConclusionStage !== currentConclusionStage) {
+          const next = pendingConclusionStage;
+          pendingConclusionStage = null;
+          goToConclusionStage(next);
+        } else {
+          pendingConclusionStage = null;
+        }
+      }, CONCLUSION_TRANSITION_MS);
+    }
+
+    function updateConclusionScene() {
+      if (!conclusionScrollSection) return;
+      const rect = conclusionScrollSection.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const scrollable = conclusionScrollSection.offsetHeight - viewportH;
+      if (scrollable <= 0) return;
+
+      const progress = Math.min(Math.max(-rect.top / scrollable, 0), 1);
+      const totalStages = conclusionStageOrder.length;
+
+      let desiredStage = -1;
+      if (progress >= 0.02) {
+        desiredStage = Math.min(totalStages - 1, Math.floor((progress - 0.02) / (0.98 / totalStages)));
+      }
+
+      goToConclusionStage(desiredStage);
+    }
+
+    window.addEventListener('scroll', () => {
+      requestAnimationFrame(updateConclusionScene);
+    }, { passive: true });
+    window.addEventListener('resize', updateConclusionScene);
+    window.addEventListener('load', updateConclusionScene);
+
 // ── Navbar section-reveal logic (disabled — navbar is always visible) ──────
 // const siteNav = document.getElementById('siteNav');
 

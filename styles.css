@@ -572,43 +572,117 @@ sup a:hover {
     CONCLUSION SECTION
   ========================= */
 
-.conclusion-section {
+/* =========================
+   CONCLUSION SCROLL SECTION
+   ========================= */
+
+.conclusion-scroll-section {
+  position: relative;
+  height: 500vh;
   background: #0e2b1c;
-  color: #f6f2eb;
-  padding: 18vh 8vw 30vh 8vw;
 }
 
-.conclusion-inner {
+.conclusion-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12vh 8vw;
+  background: #0e2b1c;
+  overflow: hidden;
+}
+
+.conclusion-stage-wrap {
+  position: relative;
+  width: 100%;
   max-width: 900px;
-  margin: 0 auto;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.conclusion-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   text-align: center;
   opacity: 0;
-  transform: translateY(34px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  visibility: hidden;
+  transform: translateY(18px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    visibility 0s linear 0.45s;
+  will-change: opacity, transform;
+  pointer-events: none;
 }
 
-.conclusion-inner.visible {
+.conclusion-stage.active {
   opacity: 1;
+  visibility: visible;
   transform: translateY(0);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease,
+    visibility 0s linear 0s;
 }
 
-.conclusion-text h3 {
+.conclusion-stage h2 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 3.5vw, 4rem);
-  line-height: 1.02;
-  font-weight: 450;
+  font-size: clamp(2.1rem, 3vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 400;
   color: #f6f2eb;
-  margin-bottom: 1rem;
+  max-width: 850px;
 }
 
-.conclusion-text p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.3;
-    color: #f6f2eb;
-    opacity: 0.9;
-    max-width: 720px;
-    margin: 0 auto;
+.conclusion-stage p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #f6f2eb;
+  opacity: 0.9;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.conclusion-stage-final h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 700;
+  color: #f6f2eb;
+  margin-top: 0.5rem;
+  line-height: 1;
+}
+
+.conclusion-pre-question {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: #f6f2eb;
+  opacity: 0.75;
+  margin-bottom: 0.5rem !important;
+}
+
+/* =========================
+   ANALYSIS NOTEBOOK SECTION
+   ========================= */
+
+#analysis-notebook {
+  background: #0e2b1c;
+}
+
+#analysis-notebook .closing-sticky {
+  position: static;
+  min-height: unset;
+  padding: 14vh 8vw;
+  text-align: center;
+  color: #f6f2eb;
 }
 
 /* =========================
