@@ -1281,6 +1281,10 @@ position: relative;
 height: 420px;
 }
 
+.age-height{
+  height: 600px;
+}
+
 /* Map panel: top corners flush with tab bar */
 .eu-map-panel {
 border-top-left-radius: 0;
